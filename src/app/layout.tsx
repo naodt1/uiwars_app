@@ -3,6 +3,7 @@ import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { AuthWrapper } from '@/components/AuthWrapper';
 import { Navbar } from '@/components/Navbar';
+import { Analytics } from '@vercel/analytics/next';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -119,6 +120,7 @@ export default function RootLayout({
           <Navbar />
           {children}
         </AuthWrapper>
+        <Analytics />
       </body>
     </html>
   );
