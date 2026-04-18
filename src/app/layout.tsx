@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
 
   title: {
-    default: 'UIWars — Real-time UI/UX Design Battles',
+    default: 'UIWars: Real-time UI/UX Design Battles',
     template: '%s | UIWars',
   },
   description:
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: siteUrl,
     siteName: 'UIWars',
-    title: 'UIWars — Real-time UI/UX Design Battles',
+    title: 'UIWars: Real-time UI/UX Design Battles',
     description:
       'Join a room, tackle a timed UI/UX challenge, submit your Figma link, and vote for the best design. Free, instant, no account needed.',
     images: [
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
         url: `${siteUrl}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: 'UIWars — Design Battle Game',
+        alt: 'UIWars: Design Battle Game',
       },
     ],
   },
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   // Twitter / X
   twitter: {
     card: 'summary_large_image',
-    title: 'UIWars — Real-time UI/UX Design Battles',
+    title: 'UIWars: Real-time UI/UX Design Battles',
     description:
       'Real-time multiplayer design battles. Pick a prompt, open Figma, submit, vote. No account needed.',
     images: [`${siteUrl}/og-image.png`],
