@@ -5,21 +5,30 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
-import { Star, Swords } from "lucide-react";
+import { Badge } from "@/components/ui/Badge";
+import { Star, Swords, Users, Zap, Lightbulb, Target, Skull } from "lucide-react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { generateRoomConfig } from "@/lib/promptGenerator";
+import { GameConfigModal, type GameConfig } from "@/components/GameConfigModal";
+
+const MODE_ICONS: Record<string, React.ReactNode> = {
+  SPEED: <Zap size={14} strokeWidth={3} />,
+  CREATIVE: <Lightbulb size={14} strokeWidth={3} />,
+  UX: <Target size={14} strokeWidth={3} />,
+  CHAOS: <Skull size={14} strokeWidth={3} />,
+};
 
 export default function Home() {
   const router = useRouter();
   const [roomCode, setRoomCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showConfig, setShowConfig] = useState(false);
 
-  const generateRoomCode = () => {
-    return Math.random().toString(36).substring(2, 7).toUpperCase();
-  };
+  const generateRoomCode = () =>
+    Math.random().toString(36).substring(2, 7).toUpperCase();
 
-  const handleCreateRoom = async () => {
+  const handleCreateRoom = async (config: GameConfig) => {
     if (!isSupabaseConfigured) {
       setError("Supabase not configured. Add credentials to .env.local and run the SQL setup script.");
       return;
@@ -30,11 +39,15 @@ export default function Home() {
       if (!uid) throw new Error("Local identity lost!");
 
       const newRoomCode = generateRoomCode();
-      const config = generateRoomConfig();
+      // Generate prompt for the chosen mode/level
+      const fullConfig = generateRoomConfig();
+      // Override mode and level with user selection, regenerate prompt for that combo
+      const { generateRoomConfigForOptions } = await import("@/lib/promptGenerator");
+      const prompt = generateRoomConfigForOptions(config.mode, config.level);
 
-      const { error: insertError } = await supabase.from('rooms').insert({
+      const { error: insertError } = await supabase.from("rooms").insert({
         id: newRoomCode,
-        prompt: config.prompt,
+        prompt,
         mode: config.mode,
         level: config.level,
         time_limit: config.timeLimit,
@@ -46,7 +59,6 @@ export default function Home() {
       });
 
       if (insertError) throw insertError;
-
       router.push(`/room/${newRoomCode}`);
     } catch (err: any) {
       setError(err.message || "An error occurred");
@@ -61,63 +73,128 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-halftone flex flex-col items-center justify-center p-6 bg-neo-canvas text-neo-ink">
-      <div className="max-w-2xl w-full text-center space-y-12 relative">
-        <div className="absolute -top-12 -left-12 rotate-12 text-neo-accent animate-pulse">
-          <Star size={48} className="fill-neo-accent" />
-        </div>
-        <div className="absolute -bottom-8 -right-8 -rotate-12 text-neo-secondary hidden md:block">
-          <Star size={64} className="fill-neo-secondary" />
-        </div>
+    <>
+      {showConfig && (
+        <GameConfigModal
+          onConfirm={(config) => {
+            setShowConfig(false);
+            handleCreateRoom(config);
+          }}
+          onCancel={() => setShowConfig(false)}
+          loading={loading}
+        />
+      )}
 
-        <div className="space-y-4">
-          <h1 className="text-7xl md:text-9xl font-black uppercase tracking-tighter" style={{ WebkitTextStroke: '2px black', color: 'transparent', textShadow: '6px 6px 0px #FF6B6B' }}>
-            UIWARS
-          </h1>
-          <p className="text-xl md:text-3xl font-bold uppercase tracking-widest bg-neo-secondary inline-block px-4 py-2 border-4 border-neo-ink rotate-2 shadow-[4px_4px_0px_0px_#000]">
-            DESIGN BATTLES
-          </p>
-        </div>
-
-        {error && (
-          <div className="bg-neo-accent text-white border-4 border-neo-ink p-4 font-bold shadow-[4px_4px_0px_0px_#000]">
-            {error}
+      <main
+        className="min-h-[calc(100vh-57px)] flex flex-col items-center justify-center p-6 text-neo-ink"
+        style={{
+          backgroundImage: 'radial-gradient(#00000022 1.5px, transparent 1.5px)',
+          backgroundSize: '22px 22px',
+          backgroundColor: '#FFFDF5',
+        }}
+      >
+        <div className="max-w-2xl w-full space-y-10 relative">
+          {/* Decorative stars */}
+          <div className="absolute -top-14 -left-10 rotate-12 text-neo-accent animate-pulse pointer-events-none hidden md:block">
+            <Star size={52} className="fill-neo-accent" />
           </div>
-        )}
+          <div className="absolute -bottom-10 -right-8 -rotate-12 text-neo-secondary pointer-events-none hidden md:block">
+            <Star size={64} className="fill-neo-secondary" />
+          </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mt-12 w-full text-left">
-          <Card className="-rotate-1">
-            <CardContent className="space-y-6">
-              <h2 className="text-3xl font-black uppercase tracking-tight flex items-center gap-2">
-                <Swords size={32} /> Create Room
-              </h2>
-              <p className="font-bold text-neo-ink/70">Host a new battle and invite players to join.</p>
-              <Button onClick={handleCreateRoom} disabled={loading} className="w-full text-xl" size="lg">
-                NEW BATTLE
-              </Button>
-            </CardContent>
-          </Card>
+          {/* Hero */}
+          <div className="text-center space-y-4">
+            <h1
+              className="text-7xl md:text-9xl font-black uppercase tracking-tighter"
+              style={{ WebkitTextStroke: '3px black', color: 'transparent', textShadow: '6px 6px 0px #FF6B6B' }}
+            >
+              UIWARS
+            </h1>
+            <p className="text-xl md:text-2xl font-bold uppercase tracking-widest bg-neo-secondary inline-block px-4 py-2 border-4 border-neo-ink rotate-2 shadow-[4px_4px_0px_0px_#000]">
+              Design. Battle. Win.
+            </p>
+          </div>
 
-          <Card className="rotate-1 bg-neo-muted">
-            <CardContent className="space-y-6">
-              <h2 className="text-3xl font-black uppercase tracking-tight">Join Room</h2>
-              <p className="font-bold text-neo-ink/70">Enter an existing battle code to jump in.</p>
-              <form onSubmit={handleJoinRoom} className="space-y-4">
-                <Input 
-                  placeholder="CODE (EX: ABCDE)" 
-                  value={roomCode}
-                  onChange={(e) => setRoomCode(e.target.value)}
-                  maxLength={5}
-                  className="uppercase text-center"
-                />
-                <Button type="submit" variant="secondary" className="w-full text-xl" size="lg">
-                  ENTER BATTLE
+          {error && (
+            <div className="bg-neo-accent text-white border-4 border-neo-ink p-4 font-bold shadow-[4px_4px_0px_0px_#000]">
+              ⚠ {error}
+            </div>
+          )}
+
+          {/* Cards */}
+          <div className="grid md:grid-cols-2 gap-8 w-full text-left">
+            {/* Create Room */}
+            <Card className="-rotate-1">
+              <div className="bg-neo-accent border-b-4 border-neo-ink p-4">
+                <h2 className="text-2xl font-black uppercase tracking-tight text-white flex items-center gap-2">
+                  <Swords size={28} strokeWidth={3} /> NEW BATTLE
+                </h2>
+              </div>
+              <CardContent className="pt-5 space-y-4">
+                <p className="font-bold text-neo-ink/70">Host a room. You choose the mode, level and timer.</p>
+
+                {/* Mode icons preview */}
+                <div className="flex gap-2 flex-wrap">
+                  {(['SPEED','CREATIVE','UX','CHAOS'] as const).map((m) => (
+                    <span key={m} className="flex items-center gap-1 border-4 border-neo-ink bg-white font-black uppercase text-xs px-2 py-1 shadow-[2px_2px_0px_0px_#000] tracking-widest">
+                      {MODE_ICONS[m]} {m}
+                    </span>
+                  ))}
+                </div>
+
+                <Button
+                  onClick={() => setShowConfig(true)}
+                  disabled={loading}
+                  className="w-full text-lg"
+                  size="lg"
+                >
+                  CONFIGURE & CREATE →
                 </Button>
-              </form>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+
+            {/* Join Room */}
+            <Card className="rotate-1 bg-neo-muted">
+              <div className="bg-neo-ink border-b-4 border-neo-ink p-4">
+                <h2 className="text-2xl font-black uppercase tracking-tight text-white flex items-center gap-2">
+                  <Users size={28} strokeWidth={3} /> JOIN BATTLE
+                </h2>
+              </div>
+              <CardContent className="pt-5 space-y-4">
+                <p className="font-bold text-neo-ink/70">Got a battle code? Jump straight in.</p>
+                <form onSubmit={handleJoinRoom} className="space-y-3">
+                  <Input
+                    placeholder="ENTER CODE (ABCDE)"
+                    value={roomCode}
+                    onChange={(e) => setRoomCode(e.target.value)}
+                    maxLength={5}
+                    className="uppercase text-center font-black tracking-widest text-2xl"
+                  />
+                  <Button type="submit" variant="secondary" className="w-full text-lg" size="lg">
+                    ENTER BATTLE →
+                  </Button>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Modes info strip */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {[
+              { mode: 'SPEED', color: 'bg-neo-secondary', desc: 'Fast & simple' },
+              { mode: 'CREATIVE', color: 'bg-neo-muted', desc: 'Wild scenarios' },
+              { mode: 'UX', color: 'bg-white', desc: 'Real problems' },
+              { mode: 'CHAOS', color: 'bg-neo-accent', desc: 'Pure madness' },
+            ].map(({ mode, color, desc }) => (
+              <div key={mode} className={`${color} border-4 border-neo-ink p-3 shadow-[4px_4px_0px_0px_#000] text-center`}>
+                <div className="flex justify-center mb-1">{MODE_ICONS[mode]}</div>
+                <p className="font-black uppercase text-xs tracking-widest">{mode}</p>
+                <p className="text-xs font-bold text-neo-ink/60 mt-0.5">{desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }

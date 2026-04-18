@@ -1,25 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card, CardContent } from "@/components/ui/Card";
-import { Star } from "lucide-react";
+import { Star, RefreshCw } from "lucide-react";
+import { generateNickname } from "@/lib/nicknames";
 
 export function AuthWrapper({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
   const [hasIdentity, setHasIdentity] = useState(false);
   const [nicknameInput, setNicknameInput] = useState("");
 
+  const refreshNickname = useCallback(() => {
+    setNicknameInput(generateNickname());
+  }, []);
+
   useEffect(() => {
     const id = localStorage.getItem("uiwars_userId");
     const name = localStorage.getItem("uiwars_nickname");
-    
+
     if (id && name) {
       setHasIdentity(true);
     } else {
       localStorage.removeItem("uiwars_userId");
       localStorage.removeItem("uiwars_nickname");
+      setNicknameInput(generateNickname());
     }
     setMounted(true);
   }, []);
@@ -27,49 +33,77 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   const handleJoin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!nicknameInput.trim()) return;
-    
+
     const newId = crypto.randomUUID();
     localStorage.setItem("uiwars_userId", newId);
     localStorage.setItem("uiwars_nickname", nicknameInput.trim());
-    
+
     setHasIdentity(true);
   };
 
   if (!mounted) return null;
-
-  if (hasIdentity) {
-    return <>{children}</>;
-  }
+  if (hasIdentity) return <>{children}</>;
 
   return (
-    <main className="min-h-screen bg-halftone flex flex-col items-center justify-center p-6 bg-neo-canvas text-neo-ink">
+    <main className="min-h-screen flex flex-col items-center justify-center p-6 bg-neo-canvas text-neo-ink"
+      style={{
+        backgroundImage: 'radial-gradient(#000 1.5px, transparent 1.5px)',
+        backgroundSize: '20px 20px',
+      }}
+    >
       <div className="max-w-md w-full relative">
-        <div className="absolute -top-8 -left-8 -rotate-12 text-neo-accent animate-pulse">
+        {/* Decorative stars */}
+        <div className="absolute -top-10 -left-10 -rotate-12 text-neo-accent animate-pulse pointer-events-none">
           <Star size={48} className="fill-neo-accent" />
         </div>
-        <Card className="rotate-1 bg-white">
-          <CardContent className="pt-8 space-y-6">
-            <div className="space-y-2 text-center">
-               <h1 className="text-5xl font-black uppercase tracking-tighter" style={{ WebkitTextStroke: '2px black', color: 'white', textShadow: '4px 4px 0px #FF6B6B' }}>
-                UIWARS
-              </h1>
-              <p className="font-bold text-lg text-neo-ink/70">Enter a nickname to jump in instantly.</p>
-            </div>
+        <div className="absolute -bottom-8 -right-8 rotate-12 text-neo-secondary pointer-events-none hidden sm:block">
+          <Star size={36} className="fill-neo-secondary" />
+        </div>
+
+        <Card className="rotate-1">
+          <div className="bg-neo-accent border-b-4 border-neo-ink p-6 text-center">
+            <h1
+              className="text-6xl font-black uppercase tracking-tighter text-white"
+              style={{ textShadow: '4px 4px 0px #000' }}
+            >
+              UIWARS
+            </h1>
+            <p className="font-bold text-white/80 mt-1 uppercase tracking-widest text-sm">Design. Battle. Win.</p>
+          </div>
+          <CardContent className="pt-6 space-y-5">
             <form onSubmit={handleJoin} className="space-y-4">
               <div>
-                <label className="font-black uppercase tracking-widest text-sm mb-2 block text-neo-ink/70">YOUR NICKNAME</label>
-                <Input 
-                  placeholder="E.G. DESIGN_BEAST" 
+                <div className="flex justify-between items-center mb-2">
+                  <label className="font-black uppercase tracking-widest text-sm text-neo-ink/70">
+                    YOUR NICKNAME
+                  </label>
+                  <button
+                    type="button"
+                    onClick={refreshNickname}
+                    className="flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-neo-ink/50 hover:text-neo-accent transition-colors"
+                    title="Generate new nickname"
+                  >
+                    <RefreshCw size={12} strokeWidth={3} />
+                    RANDOM
+                  </button>
+                </div>
+                <Input
+                  placeholder="E.G. PIXEL_SHARK42"
                   value={nicknameInput}
-                  onChange={(e) => setNicknameInput(e.target.value)}
+                  onChange={(e) => setNicknameInput(e.target.value.toUpperCase())}
                   maxLength={15}
                   autoFocus
+                  className="text-center font-black tracking-widest uppercase"
                 />
               </div>
               <Button type="submit" className="w-full text-xl" size="lg">
-                JOIN UIWARS
+                ENTER THE ARENA →
               </Button>
             </form>
+
+            <p className="text-center text-xs font-bold text-neo-ink/40 uppercase tracking-widest">
+              No account needed. No passwords. Ever.
+            </p>
           </CardContent>
         </Card>
       </div>

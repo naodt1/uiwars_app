@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { AuthWrapper } from '@/components/AuthWrapper';
+import { Navbar } from '@/components/Navbar';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${spaceGrotesk.variable} font-sans antialiased text-neo-ink bg-neo-canvas`}>
         <AuthWrapper>
+          <Navbar />
           {children}
         </AuthWrapper>
       </body>

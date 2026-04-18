@@ -101,30 +101,34 @@ export const generateRoomConfig = (): { mode: GameMode; level: GameLevel; prompt
   const levels: GameLevel[] = [1, 2, 3, 4];
   
   const mode = getRandom(modes);
-  
-  // E.g., Chaos mode favors higher levels, Speed favors lower, but let's keep it random or slightly weighted for MVP.
-  // We'll just do pure random for MVP to keep it simple.
   const level = getRandom(levels);
 
   const context = getRandom(CONTEXTS[mode]);
   const task = getRandom(TASKS[mode]);
   const constraints = getConstraintsForLevel(level, mode);
 
-  let timeLimit = 5 * 60 * 1000; // default 5 mins
+  let timeLimit = 5 * 60 * 1000;
   if (mode === 'SPEED') timeLimit = 3 * 60 * 1000;
   if (level > 2 && mode !== 'SPEED') timeLimit = 7 * 60 * 1000;
 
-  const votingTime = 2 * 60 * 1000; // 2 minutes to vote
+  const votingTime = 2 * 60 * 1000;
 
   return {
     mode,
     level,
-    prompt: {
-      context,
-      task,
-      constraints
-    },
+    prompt: { context, task, constraints },
     timeLimit,
     votingTime
   };
 };
+
+/**
+ * Generate just the prompt for a specific mode + level (used when the host configures the room manually).
+ */
+export const generateRoomConfigForOptions = (mode: GameMode, level: GameLevel): StructuredPrompt => {
+  const context = getRandom(CONTEXTS[mode]);
+  const task = getRandom(TASKS[mode]);
+  const constraints = getConstraintsForLevel(level, mode);
+  return { context, task, constraints };
+};
+

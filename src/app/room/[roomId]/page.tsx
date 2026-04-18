@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { Clock, Trophy, Play, Upload, Check, ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { Clock, Trophy, Play, Upload, Check } from "lucide-react";
 import { use } from "react";
 
 export default function RoomPage({ params }: { params: Promise<{ roomId: string }> }) {
@@ -70,31 +69,18 @@ export default function RoomPage({ params }: { params: Promise<{ roomId: string 
   };
 
   const renderTopBar = () => (
-    <div className="flex flex-col md:flex-row justify-between items-start md:items-center p-6 border-b-8 border-neo-ink bg-neo-secondary sticky top-0 z-50">
-      <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-        <div className="flex items-center gap-4">
-          <Link href="/">
-            <Button variant="outline" className="bg-white hover:bg-neo-accent hover:text-white" size="icon">
-              <ArrowLeft size={24} strokeWidth={3} />
-            </Button>
-          </Link>
-          <div className="bg-neo-accent text-white border-4 border-neo-ink px-4 py-2 font-black uppercase text-xl md:text-3xl shadow-[4px_4px_0px_0px_#000] -rotate-2 leading-none">
-            UIWARS
-          </div>
-        </div>
-        
-        <div>
-          <h1 className="text-xl md:text-3xl font-black uppercase tracking-tighter leading-none mt-4 md:mt-0">ROOM: {room.id}</h1>
-          <div className="font-bold flex flex-wrap items-center gap-2 mt-2">
-            <Badge variant="outline">STATUS: {room.status}</Badge>
-            <Badge variant="muted">{players.length} PLAYERS</Badge>
-            <Badge variant="accent">MODE: {room.mode}</Badge>
-            <Badge variant="secondary">LVL: {room.level}</Badge>
-          </div>
+    <div className="flex flex-col md:flex-row justify-between items-start md:items-center px-6 py-4 border-b-4 border-neo-ink bg-neo-secondary">
+      <div>
+        <h1 className="text-xl md:text-3xl font-black uppercase tracking-tighter leading-none">ROOM: {room.id}</h1>
+        <div className="font-bold flex flex-wrap items-center gap-2 mt-2">
+          <Badge variant="outline">STATUS: {room.status}</Badge>
+          <Badge variant="muted">{players.length} PLAYERS</Badge>
+          <Badge variant="accent">MODE: {room.mode}</Badge>
+          <Badge variant="secondary">LVL: {room.level}</Badge>
         </div>
       </div>
       {room.timerEndsAt && timeLeft !== null && (
-        <div className="mt-4 sm:mt-0 flex items-center gap-2 bg-white border-4 border-neo-ink px-4 py-2 rotate-2 shadow-[4px_4px_0px_0px_#000]">
+        <div className="mt-4 md:mt-0 flex items-center gap-2 bg-white border-4 border-neo-ink px-4 py-2 rotate-2 shadow-[4px_4px_0px_0px_#000]">
           <Clock className="stroke-[3px]" />
           <span className="text-2xl font-black tracking-widest">{formatTime(timeLeft)}</span>
         </div>
