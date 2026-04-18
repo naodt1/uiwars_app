@@ -14,6 +14,11 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: 'UIWars - Real-time UI/UX Design Battles',
   description: 'Join rooms, complete design challenges, and vote on the winner.',
+  icons: {
+    icon: '/logo.svg',
+    shortcut: '/logo.svg',
+    apple: '/logo.svg',
+  },
 };
 
 export default function RootLayout({

@@ -1,0 +1,16 @@
+<svg viewBox="0 0 64 75" xmlns="http://www.w3.org/2000/svg" width="256" height="300">
+  <!-- Yellow background -->
+  <rect width="64" height="64" rx="10" fill="#FFD93D" style="fill:rgb(255, 217, 61);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <!-- Dark border inset -->
+  <rect x="3" y="3" width="58" height="58" rx="8" fill="none" stroke="#1a1a1a" stroke-width="2.5" style="fill:none;stroke:rgb(26, 26, 26);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- "UI" top row -->
+  <!-- U -->
+  <text x="6" y="32" font-family="'Black Han Sans', 'Fredoka One', 'Arial Black', Impact, sans-serif" font-weight="900" font-size="26" fill="#FF6B6B" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round" paint-order="stroke fill" letter-spacing="0" style="fill:rgb(255, 107, 107);stroke:rgb(26, 26, 26);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:butt;stroke-linejoin:round;opacity:1;font-family:&quot;Black Han Sans&quot;, &quot;Fredoka One&quot;, &quot;Arial Black&quot;, Impact, sans-serif;font-size:26px;font-weight:900;text-anchor:start;dominant-baseline:auto">UI</text>
+
+  <!-- "W" bottom row -->
+  <text x="-0.51" y="57" font-family="'Black Han Sans', 'Fredoka One', 'Arial Black', Impact, sans-serif" font-weight="900" font-size="26" fill="#FF6B6B" stroke="#1a1a1a" stroke-width="2.5" stroke-linejoin="round" paint-order="stroke fill" letter-spacing="-1" style="fill:rgb(255, 107, 107);stroke:rgb(26, 26, 26);color:rgb(255, 255, 255);stroke-width:2.5px;stroke-linecap:butt;stroke-linejoin:round;opacity:1;font-family:&quot;Black Han Sans&quot;, &quot;Fredoka One&quot;, &quot;Arial Black&quot;, Impact, sans-serif;font-size:26px;font-weight:900;text-anchor:start;dominant-baseline:auto">WAR</text>
+
+  <!-- small star accent -->
+  <polygon points="55,8 56.5,11.5 60,11.5 57.5,13.5 58.5,17 55,15 51.5,17 52.5,13.5 50,11.5 53.5,11.5" fill="#1a1a1a" style="fill:rgb(26, 26, 26);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+</svg>

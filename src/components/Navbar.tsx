@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { LogOut, User, Sword, Home } from "lucide-react";
+import Image from "next/image";
 
 export function Navbar() {
   const router = useRouter();
@@ -44,13 +45,15 @@ export function Navbar() {
             HOME
           </Link>
         )}
-        <Link href="/" className="flex items-center gap-2">
-          <div
-            className="bg-neo-accent text-white border-4 border-neo-ink px-3 py-1 font-black uppercase text-xl md:text-2xl tracking-tighter leading-none shadow-[4px_4px_0px_0px_#000] -rotate-1"
-            style={{ textShadow: '2px 2px 0px #000' }}
-          >
-            UI<span className="text-neo-secondary">WARS</span>
-          </div>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo.svg"
+            alt="UIWars"
+            width={120}
+            height={36}
+            priority
+            className="h-9 w-auto"
+          />
         </Link>
       </div>
 
