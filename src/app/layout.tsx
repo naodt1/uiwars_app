@@ -11,7 +11,7 @@ const spaceGrotesk = Space_Grotesk({
   weight: ['400', '500', '700'],
 });
 
-const siteUrl = 'https://uiwars.app';
+const siteUrl = 'https://uiwars-app.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

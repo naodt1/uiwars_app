@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/room/'], // room pages are ephemeral, no value indexing them
       },
     ],
-    sitemap: 'https://uiwars.app/sitemap.xml',
+    sitemap: 'https://uiwars-app.vercel.app/sitemap.xml',
   };
 }
