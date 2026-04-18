@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --color-neo-accent: #FF6B6B;
+  --color-neo-secondary: #FFD93D;
+  --color-neo-muted: #C4B5FD;
+  --color-neo-canvas: #FFFDF5;
+  --color-neo-ink: #000000;
+  
+  --shadow-neo-sm: 4px 4px 0px 0px #000;
+  --shadow-neo-md: 8px 8px 0px 0px #000;
+  --shadow-neo-lg: 12px 12px 0px 0px #000;
+  --shadow-neo-xl: 16px 16px 0px 0px #000;
+
+  --border-width-4: 4px;
+}
+
+:root {
+  --background: var(--color-neo-canvas);
+  --foreground: var(--color-neo-ink);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base styles to enforce neo-brutalism by default as suggested by design system */
+* {
+  border-color: var(--color-neo-ink);
+}
+
+/* Utility classes for specific textures from GEMINI.md */
+.bg-halftone {
+  background-image: radial-gradient(#000 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+}
+
+.bg-grid {
+  background-size: 40px 40px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+}
