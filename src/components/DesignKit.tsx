@@ -2,77 +2,93 @@
 
 import { useState } from "react";
 import type { DesignSystem } from "@/lib/types";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Palette } from "lucide-react";
 
 export function DesignKit({ designSystem }: { designSystem: DesignSystem }) {
   const [open, setOpen] = useState(true);
 
   return (
-    <div className="border-4 border-neo-ink bg-white shadow-[4px_4px_0px_0px_#000] rotate-0.5">
+    <div className="border-4 border-neo-ink bg-white shadow-[4px_4px_0px_0px_#000]">
       <button
         onClick={() => setOpen(o => !o)}
         className="w-full flex items-center justify-between px-5 py-3 bg-neo-ink text-white font-black uppercase tracking-widest text-sm"
       >
-        <span>🎨 Design Kit — {designSystem.name}</span>
+        <span className="flex items-center gap-2">
+          <Palette size={16} strokeWidth={3} />
+          Design Kit — use these in your design
+        </span>
         {open ? <ChevronUp size={18} strokeWidth={3} /> : <ChevronDown size={18} strokeWidth={3} />}
       </button>
 
       {open && (
-        <div className="p-5 space-y-5">
+        <div className="p-5 grid md:grid-cols-2 gap-6">
+          {/* Font */}
+          <div className="space-y-2">
+            <p className="font-black uppercase text-xs tracking-widest text-neo-ink/50">Font Family</p>
+            <div className="border-4 border-neo-ink p-4 bg-neo-canvas">
+              <p className="text-2xl font-black" style={{ fontFamily: designSystem.typography.fontFamily }}>
+                {designSystem.typography.fontFamily.split(",")[0]}
+              </p>
+              <p className="text-xs font-mono text-neo-ink/50 mt-1">{designSystem.typography.fontFamily}</p>
+              <div className="flex gap-4 mt-3">
+                {designSystem.typography.sizes.map(s => (
+                  <div key={s.label}>
+                    <p className="text-[10px] font-black uppercase text-neo-ink/40">{s.label}</p>
+                    <p className="font-bold text-xs">{s.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Colors */}
-          <div>
-            <p className="font-black uppercase text-xs tracking-widest text-neo-ink/50 mb-2">Color Palette</p>
-            <div className="flex flex-wrap gap-3">
+          <div className="space-y-2">
+            <p className="font-black uppercase text-xs tracking-widest text-neo-ink/50">Color Tokens</p>
+            <div className="space-y-2">
               {designSystem.colors.map(token => (
-                <div key={token.name} className="flex flex-col items-center gap-1">
+                <div key={token.name} className="flex items-center gap-3 border-2 border-neo-ink p-2 bg-neo-canvas">
                   <div
-                    className="w-12 h-12 border-2 border-neo-ink shadow-[2px_2px_0px_0px_#000]"
+                    className="w-10 h-10 flex-shrink-0 border-2 border-neo-ink"
                     style={{ backgroundColor: token.value }}
                   />
-                  <span className="text-[10px] font-black uppercase text-center leading-tight">{token.name}</span>
-                  <span className="text-[10px] font-mono text-neo-ink/50">{token.value}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-black uppercase text-sm leading-none">{token.name}</p>
+                    <p className="font-mono text-xs text-neo-ink/60 mt-0.5">{token.value}</p>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Typography */}
-          <div>
-            <p className="font-black uppercase text-xs tracking-widest text-neo-ink/50 mb-2">Typography</p>
-            <div className="bg-neo-canvas border-2 border-neo-ink p-3 space-y-1">
-              <p className="font-black text-xs uppercase tracking-widest text-neo-ink/50">Font: {designSystem.typography.fontFamily}</p>
-              <div className="flex flex-wrap gap-x-6 gap-y-1 mt-2">
-                {designSystem.typography.sizes.map(s => (
-                  <span key={s.label} className="font-bold text-xs">
-                    <span className="text-neo-ink/50">{s.label}:</span> {s.value}
-                  </span>
-                ))}
+          {/* Style rules */}
+          <div className="md:col-span-2 flex gap-6 border-t-4 border-neo-ink pt-4">
+            <div>
+              <p className="font-black uppercase text-xs tracking-widest text-neo-ink/50 mb-2">Border Radius</p>
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-10 h-10 bg-neo-accent border-2 border-neo-ink"
+                  style={{ borderRadius: designSystem.borderRadius }}
+                />
+                <span className="font-mono font-bold text-sm">{designSystem.borderRadius}</span>
               </div>
             </div>
-          </div>
-
-          {/* Tokens */}
-          <div className="flex gap-6">
             <div>
-              <p className="font-black uppercase text-xs tracking-widest text-neo-ink/50 mb-1">Border Radius</p>
-              <div
-                className="w-12 h-12 bg-neo-accent border-2 border-neo-ink"
-                style={{ borderRadius: designSystem.borderRadius }}
-              />
-              <p className="text-xs font-mono mt-1 text-neo-ink/60">{designSystem.borderRadius}</p>
-            </div>
-            <div>
-              <p className="font-black uppercase text-xs tracking-widest text-neo-ink/50 mb-1">Spacing Unit</p>
-              <div className="flex items-end gap-0.5 h-12">
-                {[1, 2, 3, 4].map(n => (
-                  <div
-                    key={n}
-                    className="bg-neo-ink"
-                    style={{ width: designSystem.spacingUnit, height: `${parseInt(designSystem.spacingUnit) * n}px` }}
-                  />
-                ))}
+              <p className="font-black uppercase text-xs tracking-widest text-neo-ink/50 mb-2">Base Spacing</p>
+              <div className="flex items-center gap-3">
+                <div className="flex items-end gap-px">
+                  {[1, 2, 3, 4].map(n => (
+                    <div
+                      key={n}
+                      className="bg-neo-ink"
+                      style={{
+                        width: `${parseInt(designSystem.spacingUnit) * 0.8}px`,
+                        height: `${parseInt(designSystem.spacingUnit) * n * 0.8}px`,
+                      }}
+                    />
+                  ))}
+                </div>
+                <span className="font-mono font-bold text-sm">{designSystem.spacingUnit}</span>
               </div>
-              <p className="text-xs font-mono mt-1 text-neo-ink/60">{designSystem.spacingUnit}</p>
             </div>
           </div>
         </div>

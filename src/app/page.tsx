@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
-import { Star, Swords, Users, Zap, Lightbulb, Target, Skull, DoorOpen } from "lucide-react";
+import { Star, Swords, Users, Zap, Lightbulb, Target, Skull, DoorOpen, User } from "lucide-react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { generateRoomConfig } from "@/lib/promptGenerator";
 import { useLounges } from "@/hooks/useLounges";
@@ -99,7 +99,7 @@ export default function Home() {
               onClick={() => router.push('/solo')}
               className="group relative text-left bg-neo-muted border-4 border-neo-ink p-8 shadow-[6px_6px_0px_0px_#000] hover:shadow-[8px_8px_0px_0px_#000] hover:-translate-y-1 transition-all duration-100 active:translate-y-0.5 active:shadow-none -rotate-1"
             >
-              <div className="text-6xl mb-4">🎯</div>
+              <User size={48} strokeWidth={2.5} className="mb-4" />
               <h2 className="text-4xl font-black uppercase tracking-tight mb-2">Solo Mode</h2>
               <p className="font-bold text-neo-ink/60 text-lg">Practice on your own. Get a random prompt, set a timer, and sharpen your skills.</p>
               <div className="mt-6 inline-flex items-center gap-2 bg-neo-ink text-white font-black uppercase text-sm px-4 py-2 border-2 border-neo-ink shadow-[3px_3px_0px_0px_#666] group-hover:shadow-none group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-all">
@@ -112,7 +112,7 @@ export default function Home() {
               onClick={() => setView('multiplayer')}
               className="group relative text-left bg-neo-accent border-4 border-neo-ink p-8 shadow-[6px_6px_0px_0px_#000] hover:shadow-[8px_8px_0px_0px_#000] hover:-translate-y-1 transition-all duration-100 active:translate-y-0.5 active:shadow-none rotate-1"
             >
-              <div className="text-6xl mb-4">⚔️</div>
+              <Swords size={48} strokeWidth={2.5} className="mb-4 text-white" />
               <h2 className="text-4xl font-black uppercase tracking-tight text-white mb-2">Multiplayer</h2>
               <p className="font-bold text-white/70 text-lg">Battle real players. Create or join a live room, design under pressure, and let the crowd vote.</p>
               <div className="mt-6 inline-flex items-center gap-2 bg-white text-neo-ink font-black uppercase text-sm px-4 py-2 border-2 border-neo-ink shadow-[3px_3px_0px_0px_#000] group-hover:shadow-none group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-all">
