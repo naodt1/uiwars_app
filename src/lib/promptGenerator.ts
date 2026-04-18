@@ -1,4 +1,5 @@
 import { GameMode, GameLevel, StructuredPrompt } from "@/lib/types";
+import { DESIGN_SYSTEMS, getRandom as pickRandom } from "@/lib/designSystems";
 
 const CONTEXTS = {
   SPEED: [
@@ -80,6 +81,14 @@ const CONSTRAINTS = {
 
 const getRandom = <T>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
 
+// UX and CREATIVE modes at level 2+ get a mandatory design system
+const getDesignSystem = (mode: GameMode, level: GameLevel) => {
+  if ((mode === 'UX' || mode === 'CREATIVE') && level >= 2) {
+    return pickRandom(DESIGN_SYSTEMS);
+  }
+  return undefined;
+};
+
 const getConstraintsForLevel = (level: GameLevel, mode: GameMode): string[] => {
   if (level === 1) return ["Make it user friendly and accessible."]; // Warmup
 
@@ -113,10 +122,12 @@ export const generateRoomConfig = (): { mode: GameMode; level: GameLevel; prompt
 
   const votingTime = 2 * 60 * 1000;
 
+  const designSystem = getDesignSystem(mode, level);
+
   return {
     mode,
     level,
-    prompt: { context, task, constraints },
+    prompt: { context, task, constraints, designSystem },
     timeLimit,
     votingTime
   };
@@ -129,6 +140,7 @@ export const generateRoomConfigForOptions = (mode: GameMode, level: GameLevel): 
   const context = getRandom(CONTEXTS[mode]);
   const task = getRandom(TASKS[mode]);
   const constraints = getConstraintsForLevel(level, mode);
-  return { context, task, constraints };
+  const designSystem = getDesignSystem(mode, level);
+  return { context, task, constraints, designSystem };
 };
 

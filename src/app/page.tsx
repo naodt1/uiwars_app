@@ -19,6 +19,7 @@ const MODE_ICONS: Record<string, React.ReactNode> = {
 
 export default function Home() {
   const router = useRouter();
+  const [view, setView] = useState<'select' | 'multiplayer'>('select');
   const [roomCode, setRoomCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -67,6 +68,63 @@ export default function Home() {
     router.push(`/room/${roomCode.toUpperCase()}`);
   };
 
+  if (view === 'select') {
+    return (
+      <main
+        className="min-h-[calc(100vh-57px)] flex flex-col items-center justify-center p-6 text-neo-ink"
+        style={{
+          backgroundImage: 'radial-gradient(#00000022 1.5px, transparent 1.5px)',
+          backgroundSize: '22px 22px',
+          backgroundColor: '#FFFDF5',
+        }}
+      >
+        <div className="max-w-3xl w-full space-y-10 text-center">
+          <div className="space-y-4">
+            <h1
+              className="text-7xl md:text-9xl font-black uppercase tracking-tighter"
+              style={{ WebkitTextStroke: '3px black', color: 'transparent', textShadow: '6px 6px 0px #FF6B6B' }}
+            >
+              UIWARS
+            </h1>
+            <p className="text-xl md:text-2xl font-bold uppercase tracking-widest bg-neo-secondary inline-block px-4 py-2 border-4 border-neo-ink rotate-2 shadow-[4px_4px_0px_0px_#000]">
+              Design. Battle. Win.
+            </p>
+          </div>
+
+          <p className="text-2xl font-black uppercase tracking-widest text-neo-ink/60">Choose your mode</p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Solo */}
+            <button
+              onClick={() => router.push('/solo')}
+              className="group relative text-left bg-neo-muted border-4 border-neo-ink p-8 shadow-[6px_6px_0px_0px_#000] hover:shadow-[8px_8px_0px_0px_#000] hover:-translate-y-1 transition-all duration-100 active:translate-y-0.5 active:shadow-none -rotate-1"
+            >
+              <div className="text-6xl mb-4">🎯</div>
+              <h2 className="text-4xl font-black uppercase tracking-tight mb-2">Solo Mode</h2>
+              <p className="font-bold text-neo-ink/60 text-lg">Practice on your own. Get a random prompt, set a timer, and sharpen your skills.</p>
+              <div className="mt-6 inline-flex items-center gap-2 bg-neo-ink text-white font-black uppercase text-sm px-4 py-2 border-2 border-neo-ink shadow-[3px_3px_0px_0px_#666] group-hover:shadow-none group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-all">
+                PRACTICE →
+              </div>
+            </button>
+
+            {/* Multiplayer */}
+            <button
+              onClick={() => setView('multiplayer')}
+              className="group relative text-left bg-neo-accent border-4 border-neo-ink p-8 shadow-[6px_6px_0px_0px_#000] hover:shadow-[8px_8px_0px_0px_#000] hover:-translate-y-1 transition-all duration-100 active:translate-y-0.5 active:shadow-none rotate-1"
+            >
+              <div className="text-6xl mb-4">⚔️</div>
+              <h2 className="text-4xl font-black uppercase tracking-tight text-white mb-2">Multiplayer</h2>
+              <p className="font-bold text-white/70 text-lg">Battle real players. Create or join a live room, design under pressure, and let the crowd vote.</p>
+              <div className="mt-6 inline-flex items-center gap-2 bg-white text-neo-ink font-black uppercase text-sm px-4 py-2 border-2 border-neo-ink shadow-[3px_3px_0px_0px_#000] group-hover:shadow-none group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-all">
+                ENTER ARENA →
+              </div>
+            </button>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main
       className="min-h-[calc(100vh-57px)] flex flex-col items-center justify-center p-6 text-neo-ink"
@@ -85,8 +143,14 @@ export default function Home() {
           <Star size={64} className="fill-neo-secondary" />
         </div>
 
-        {/* Hero */}
+        {/* Back + Hero */}
         <div className="text-center space-y-4">
+          <button
+            onClick={() => setView('select')}
+            className="absolute top-0 left-0 font-black uppercase text-sm tracking-widest text-neo-ink/50 hover:text-neo-ink flex items-center gap-1 transition-colors"
+          >
+            ← Back
+          </button>
           <h1
             className="text-7xl md:text-9xl font-black uppercase tracking-tighter"
             style={{ WebkitTextStroke: '3px black', color: 'transparent', textShadow: '6px 6px 0px #FF6B6B' }}
@@ -94,7 +158,7 @@ export default function Home() {
             UIWARS
           </h1>
           <p className="text-xl md:text-2xl font-bold uppercase tracking-widest bg-neo-secondary inline-block px-4 py-2 border-4 border-neo-ink rotate-2 shadow-[4px_4px_0px_0px_#000]">
-            Design. Battle. Win.
+            Multiplayer Arena
           </p>
         </div>
 

@@ -3,10 +3,27 @@ export type RoomStatus = 'LOBBY' | 'IN_PROGRESS' | 'SUBMISSION' | 'VOTING' | 'RE
 export type GameMode = 'SPEED' | 'CREATIVE' | 'UX' | 'CHAOS';
 export type GameLevel = 1 | 2 | 3 | 4;
 
+export interface DesignToken {
+  name: string;
+  value: string; // hex color
+}
+
+export interface DesignSystem {
+  name: string;
+  colors: DesignToken[];
+  typography: {
+    fontFamily: string;
+    sizes: { label: string; value: string }[];
+  };
+  borderRadius: string;
+  spacingUnit: string;
+}
+
 export interface StructuredPrompt {
   context: string;
   task: string;
   constraints: string[];
+  designSystem?: DesignSystem;
 }
 
 export interface Room {

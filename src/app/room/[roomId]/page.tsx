@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Clock, Trophy, Play, Upload, Check } from "lucide-react";
 import { use } from "react";
+import { DesignKit } from "@/components/DesignKit";
 
 export default function RoomPage({ params }: { params: Promise<{ roomId: string }> }) {
   const { roomId } = use(params);
@@ -101,6 +102,10 @@ export default function RoomPage({ params }: { params: Promise<{ roomId: string 
           <div className="space-y-8 mt-4">
             {/* LOBBY PHASE */}
             {room.status === 'LOBBY' && (
+              <div className="space-y-6">
+              {room.prompt.designSystem && (
+                <DesignKit designSystem={room.prompt.designSystem} />
+              )}
               <div className="grid md:grid-cols-2 gap-8">
                 <Card className="-rotate-1">
                   <CardHeader><CardTitle>INSTRUCTIONS</CardTitle></CardHeader>
@@ -130,6 +135,7 @@ export default function RoomPage({ params }: { params: Promise<{ roomId: string 
                   </CardContent>
                 </Card>
               </div>
+              </div>
             )}
 
             {/* IN PROGRESS OR SUBMISSION PHASE */}
@@ -154,6 +160,10 @@ export default function RoomPage({ params }: { params: Promise<{ roomId: string 
                     </ul>
                   </div>
                 </div>
+
+                {room.prompt.designSystem && (
+                  <DesignKit designSystem={room.prompt.designSystem} />
+                )}
 
                 <Card className="rotate-1">
                   <CardHeader className="bg-neo-secondary"><CardTitle>YOUR SUBMISSION</CardTitle></CardHeader>
