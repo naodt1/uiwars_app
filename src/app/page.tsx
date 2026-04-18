@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
-import { Star, Swords, Users, Zap, Lightbulb, Target, Skull } from "lucide-react";
+import { Star, Swords, Users, Zap, Lightbulb, Target, Skull, DoorOpen } from "lucide-react";
 import { supabase, isSupabaseConfigured } from "@/lib/supabase";
 import { generateRoomConfig } from "@/lib/promptGenerator";
+import { useLounges } from "@/hooks/useLounges";
 
 const MODE_ICONS: Record<string, React.ReactNode> = {
   SPEED: <Zap size={14} strokeWidth={3} />,
@@ -21,6 +22,7 @@ export default function Home() {
   const [roomCode, setRoomCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { lounges, loading: loungesLoading } = useLounges();
 
   const generateRoomCode = () =>
     Math.random().toString(36).substring(2, 7).toUpperCase();
@@ -163,6 +165,65 @@ export default function Home() {
               <p className="text-xs font-bold text-neo-ink/60 mt-0.5">{desc}</p>
             </div>
           ))}
+        </div>
+
+        {/* Open Lounges */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <DoorOpen size={22} strokeWidth={3} />
+            <h2 className="text-2xl font-black uppercase tracking-tight">Open Lounges</h2>
+            <span className="bg-neo-accent text-white text-xs font-black px-2 py-0.5 border-2 border-neo-ink shadow-[2px_2px_0px_0px_#000]">
+              LIVE
+            </span>
+          </div>
+
+          {loungesLoading ? (
+            <p className="font-bold text-neo-ink/50 uppercase text-sm tracking-widest animate-pulse">Scanning for battles…</p>
+          ) : lounges.length === 0 ? (
+            <div className="border-4 border-dashed border-neo-ink/30 p-8 text-center">
+              <p className="font-black uppercase text-neo-ink/40 tracking-widest">No open lounges right now.</p>
+              <p className="text-sm font-bold text-neo-ink/30 mt-1">Create a room and start one!</p>
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 gap-4">
+              {lounges.map((lounge) => (
+                <button
+                  key={lounge.id}
+                  onClick={() => router.push(`/room/${lounge.id}`)}
+                  className="group text-left bg-white border-4 border-neo-ink p-4 shadow-[4px_4px_0px_0px_#000] hover:shadow-[6px_6px_0px_0px_#000] hover:-translate-y-0.5 transition-all duration-100 active:translate-y-0.5 active:shadow-none"
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className={`flex items-center gap-1 text-xs font-black uppercase px-2 py-0.5 border-2 border-neo-ink shadow-[2px_2px_0px_0px_#000] ${
+                        lounge.mode === 'SPEED' ? 'bg-neo-secondary' :
+                        lounge.mode === 'CREATIVE' ? 'bg-neo-muted' :
+                        lounge.mode === 'CHAOS' ? 'bg-neo-accent text-white' :
+                        'bg-white'
+                      }`}>
+                        {MODE_ICONS[lounge.mode]}
+                        {lounge.mode}
+                      </span>
+                      <span className="text-xs font-black uppercase bg-neo-ink text-white px-2 py-0.5">
+                        LVL {lounge.level}
+                      </span>
+                    </div>
+                    <span className="font-black text-neo-ink/40 text-xs uppercase tracking-widest">
+                      #{lounge.id}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="flex items-center gap-1.5 text-sm font-bold text-neo-ink/60">
+                      <Users size={14} strokeWidth={3} />
+                      {lounge.playerCount} {lounge.playerCount === 1 ? 'player' : 'players'} waiting
+                    </span>
+                    <span className="text-xs font-black uppercase text-neo-accent group-hover:underline">
+                      JOIN →
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </main>
