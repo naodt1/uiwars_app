@@ -84,7 +84,7 @@ export default function Home() {
             </p>
           </div>
 
-          <p className="text-2xl font-black uppercase tracking-widest text-neo-ink/60">Choose your mode</p>
+          <p className="text-2xl font-black uppercase tracking-widest text-neo-ink bg-white border-4 border-neo-ink px-6 py-2 inline-block -rotate-1 shadow-[4px_4px_0px_0px_#000]">Choose your mode</p>
 
           <div className="grid md:grid-cols-2 gap-6">
             {/* Solo */}
@@ -133,7 +133,7 @@ export default function Home() {
         <div className="text-center space-y-4">
           <button
             onClick={() => setView('select')}
-            className="absolute top-0 left-0 font-black uppercase text-sm tracking-widest text-neo-ink/50 hover:text-neo-ink flex items-center gap-1 transition-colors"
+            className="absolute top-0 left-0 font-black uppercase text-sm tracking-widest text-neo-ink bg-white border-2 border-neo-ink px-3 py-1 shadow-[3px_3px_0px_0px_#000] hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#000] active:translate-y-0.5 active:shadow-none flex items-center gap-1 transition-all"
           >
             ← Back
           </button>
@@ -228,11 +228,11 @@ export default function Home() {
           </div>
 
           {loungesLoading ? (
-            <p className="font-bold text-neo-ink/50 uppercase text-sm tracking-widest animate-pulse">Scanning for battles…</p>
+            <p className="font-bold text-neo-ink bg-neo-secondary border-4 border-neo-ink px-4 py-2 inline-block uppercase text-sm tracking-widest animate-pulse shadow-[4px_4px_0px_0px_#000]">Scanning for battles…</p>
           ) : lounges.length === 0 ? (
-            <div className="border-4 border-dashed border-neo-ink/30 p-8 text-center">
-              <p className="font-black uppercase text-neo-ink/40 tracking-widest">No open lounges right now.</p>
-              <p className="text-sm font-bold text-neo-ink/30 mt-1">Create a room and start one!</p>
+            <div className="border-4 border-neo-ink bg-white shadow-[6px_6px_0px_0px_#000] p-8 text-center -rotate-1">
+              <p className="font-black uppercase text-neo-ink tracking-widest text-lg">No open lounges right now.</p>
+              <p className="text-sm font-bold text-neo-ink mt-1">Create a room and start one!</p>
             </div>
           ) : (
             <div className="grid sm:grid-cols-2 gap-4">

@@ -96,9 +96,11 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
               </Button>
             </form>
 
-            <p className="text-center text-xs font-bold text-neo-ink/40 uppercase tracking-widest">
-              No account needed. No passwords. Ever.
-            </p>
+            <div className="flex justify-center">
+              <p className="bg-white border-2 border-neo-ink px-3 py-1 shadow-[2px_2px_0px_0px_#000] rotate-1 text-center text-xs font-black text-neo-ink uppercase tracking-widest inline-block">
+                No account needed. No passwords. Ever.
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>
