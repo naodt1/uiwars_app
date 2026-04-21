@@ -61,19 +61,31 @@ export function DesignKit({ designSystem }: { designSystem: DesignSystem }) {
 
           {/* Colors */}
           <div className="space-y-2">
-            <p className="font-black uppercase text-xs tracking-widest text-neo-ink/50">Color Tokens</p>
+            <p className="font-black uppercase text-xs tracking-widest text-neo-ink/50">Color Tokens (Click to Copy)</p>
             <div className="space-y-2">
               {designSystem.colors.map(token => (
-                <div key={token.name} className="flex items-center gap-3 border-2 border-neo-ink p-2 bg-neo-canvas">
-                  <div
-                    className="w-10 h-10 flex-shrink-0 border-2 border-neo-ink"
-                    style={{ backgroundColor: token.value }}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-black uppercase text-sm leading-none">{token.name}</p>
-                    <p className="font-mono text-xs text-neo-ink/60 mt-0.5">{token.value}</p>
+                <button
+                  key={token.name}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigator.clipboard.writeText(token.value);
+                    setCopied(true); // Re-using copied state, or we can use another state if we want specific token feedback
+                    setTimeout(() => setCopied(false), 2000);
+                  }}
+                  className="w-full text-left flex items-center justify-between gap-3 border-2 border-neo-ink p-2 bg-neo-canvas hover:bg-neo-ink hover:text-white transition-colors group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-10 h-10 flex-shrink-0 border-2 border-neo-ink"
+                      style={{ backgroundColor: token.value }}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="font-black uppercase text-sm leading-none">{token.name}</p>
+                      <p className="font-mono text-xs mt-0.5 opacity-60">{token.value}</p>
+                    </div>
                   </div>
-                </div>
+                  <Copy size={16} strokeWidth={3} className="opacity-0 group-hover:opacity-100 mr-2" />
+                </button>
               ))}
             </div>
           </div>
