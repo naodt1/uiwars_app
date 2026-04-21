@@ -110,9 +110,9 @@ export function Navbar() {
 
       {/* About Modal */}
       {aboutOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-neo-canvas bg-halftone">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-neo-ink/95">
           <div className="absolute inset-0" onClick={() => setAboutOpen(false)} />
-          <div className="relative bg-white border-4 border-neo-ink shadow-[16px_16px_0px_0px_#000] w-full max-w-lg p-8 rotate-1">
+          <div className="relative bg-neo-canvas bg-halftone border-4 border-neo-ink shadow-[16px_16px_0px_0px_#000] w-full max-w-lg p-8 rotate-1">
             <button 
               onClick={() => setAboutOpen(false)}
               className="absolute -top-4 -right-4 bg-neo-accent text-white border-4 border-neo-ink p-2 hover:scale-110 transition-transform shadow-[4px_4px_0px_0px_#000]"
