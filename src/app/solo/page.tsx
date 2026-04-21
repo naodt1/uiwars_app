@@ -118,6 +118,25 @@ export default function SoloPage() {
           <div className="space-y-6 mt-4">
             <PromptCard prompt={prompt} />
             {prompt.designSystem && <DesignKit designSystem={prompt.designSystem} />}
+            
+            {prompt.exampleImages && prompt.exampleImages.length > 0 && (
+              <div className="bg-neo-ink text-white p-6 border-4 border-white mt-4 shadow-[8px_8px_0px_0px_#000]">
+                <h3 className="text-lg font-black uppercase tracking-widest text-white/60 mb-2">INSPIRATION / EXAMPLE:</h3>
+                {prompt.example && <p className="text-xl font-bold mb-6">{prompt.example}</p>}
+                
+                <div className="flex gap-4 overflow-x-auto snap-x pb-2">
+                  {prompt.exampleImages.map((src, idx) => (
+                    <img
+                      key={idx}
+                      src={src}
+                      alt={`Design Example ${idx + 1}`}
+                      className="w-full max-w-lg flex-shrink-0 snap-center border-4 border-white"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="bg-white border-4 border-neo-ink p-6 shadow-[4px_4px_0px_0px_#000] rotate-1 space-y-4">
               <h3 className="text-xl font-black uppercase tracking-wide">Your Submission</h3>
               <p className="font-bold text-neo-ink/60">Design in Figma then paste your link before time runs out.</p>
@@ -187,25 +206,6 @@ function PromptCard({ prompt }: { prompt: StructuredPrompt }) {
           ))}
         </ul>
       </div>
-      {prompt.example && (
-        <div className="bg-neo-ink text-white p-4 border-4 border-white mt-4">
-          <p className="text-sm font-black uppercase tracking-widest text-white/50 mb-1">INSPIRATION / EXAMPLE</p>
-          <p className="text-xl font-bold mb-4">{prompt.example}</p>
-
-          {prompt.exampleImages && prompt.exampleImages.length > 0 && (
-            <div className="flex gap-4 overflow-x-auto snap-x pb-2">
-              {prompt.exampleImages.map((src, idx) => (
-                <img
-                  key={idx}
-                  src={src}
-                  alt={`Design Example ${idx + 1}`}
-                  className="w-full max-w-lg flex-shrink-0 snap-center border-4 border-white"
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 }

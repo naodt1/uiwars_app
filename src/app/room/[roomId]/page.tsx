@@ -159,29 +159,28 @@ export default function RoomPage({ params }: { params: Promise<{ roomId: string 
                       ))}
                     </ul>
                   </div>
-                  {room.prompt.example && (
-                    <div className="bg-neo-ink text-white p-4 border-4 border-white mt-4">
-                      <h3 className="text-lg font-black uppercase tracking-widest text-white/60 mb-2">INSPIRATION / EXAMPLE:</h3>
-                      <p className="text-xl font-bold mb-4">{room.prompt.example}</p>
-                      
-                      {room.prompt.exampleImages && room.prompt.exampleImages.length > 0 && (
-                        <div className="flex gap-4 overflow-x-auto snap-x pb-2">
-                          {room.prompt.exampleImages.map((src, idx) => (
-                            <img
-                              key={idx}
-                              src={src}
-                              alt={`Design Example ${idx + 1}`}
-                              className="w-full max-w-lg flex-shrink-0 snap-center border-4 border-white"
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
                 </div>
 
                 {room.prompt.designSystem && (
                   <DesignKit designSystem={room.prompt.designSystem} />
+                )}
+
+                {room.prompt.exampleImages && room.prompt.exampleImages.length > 0 && (
+                  <div className="bg-neo-ink text-white p-6 border-4 border-white mt-4 shadow-[8px_8px_0px_0px_#000]">
+                    <h3 className="text-lg font-black uppercase tracking-widest text-white/60 mb-2">INSPIRATION / EXAMPLE:</h3>
+                    {room.prompt.example && <p className="text-xl font-bold mb-6">{room.prompt.example}</p>}
+                    
+                    <div className="flex gap-4 overflow-x-auto snap-x pb-2">
+                      {room.prompt.exampleImages.map((src, idx) => (
+                        <img
+                          key={idx}
+                          src={src}
+                          alt={`Design Example ${idx + 1}`}
+                          className="w-full max-w-lg flex-shrink-0 snap-center border-4 border-white"
+                        />
+                      ))}
+                    </div>
+                  </div>
                 )}
 
                 <Card className="rotate-1">

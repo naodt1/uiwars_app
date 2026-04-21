@@ -5,6 +5,7 @@ interface Scenario {
   context: string;
   task: string;
   example: string;
+  exampleImages?: string[]; // Optional: Add image paths here (e.g., ['/examples/speed_sneaker/img1.png'])
 }
 
 const SCENARIOS: Record<GameMode, Scenario[]> = {
@@ -12,7 +13,8 @@ const SCENARIOS: Record<GameMode, Scenario[]> = {
     {
       context: "A boutique sneaker e-commerce store.",
       task: "Design the product filtering sidebar and results grid.",
-      example: "Think 'Nike SNKRS' meets minimalist grid brutalism. Heavy typography, raw edges, and high-contrast product imagery."
+      example: "Think 'Nike SNKRS' meets minimalist grid brutalism. Heavy typography, raw edges, and high-contrast product imagery.",
+      exampleImages: [], // Add paths here when you have images!
     },
     {
       context: "A hyper-local weather application.",
@@ -171,7 +173,7 @@ export const generateRoomConfig = (): { mode: GameMode; level: GameLevel; prompt
       context: scenario.context, 
       task: scenario.task, 
       example: scenario.example, 
-      exampleImages: [`/examples/${mode.toLowerCase()}.png`],
+      exampleImages: scenario.exampleImages || [],
       constraints, 
       designSystem 
     },
@@ -191,7 +193,7 @@ export const generateRoomConfigForOptions = (mode: GameMode, level: GameLevel): 
     context: scenario.context, 
     task: scenario.task, 
     example: scenario.example, 
-    exampleImages: [`/examples/${mode.toLowerCase()}.png`],
+    exampleImages: scenario.exampleImages || [],
     constraints, 
     designSystem 
   };
