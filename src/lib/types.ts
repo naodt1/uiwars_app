@@ -25,6 +25,7 @@ export interface StructuredPrompt {
   constraints: string[];
   designSystem?: DesignSystem;
   example?: string;
+  exampleImages?: string[];
 }
 
 export interface Room {

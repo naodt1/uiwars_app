@@ -167,7 +167,14 @@ export const generateRoomConfig = (): { mode: GameMode; level: GameLevel; prompt
   return {
     mode,
     level,
-    prompt: { context: scenario.context, task: scenario.task, example: scenario.example, constraints, designSystem },
+    prompt: { 
+      context: scenario.context, 
+      task: scenario.task, 
+      example: scenario.example, 
+      exampleImages: [`/examples/${mode.toLowerCase()}.png`],
+      constraints, 
+      designSystem 
+    },
     timeLimit,
     votingTime
   };
@@ -180,5 +187,12 @@ export const generateRoomConfigForOptions = (mode: GameMode, level: GameLevel): 
   const scenario = getRandom(SCENARIOS[mode]);
   const constraints = getConstraintsForLevel(level, mode);
   const designSystem = getDesignSystem(mode, level);
-  return { context: scenario.context, task: scenario.task, example: scenario.example, constraints, designSystem };
+  return { 
+    context: scenario.context, 
+    task: scenario.task, 
+    example: scenario.example, 
+    exampleImages: [`/examples/${mode.toLowerCase()}.png`],
+    constraints, 
+    designSystem 
+  };
 };

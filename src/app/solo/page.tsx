@@ -190,7 +190,20 @@ function PromptCard({ prompt }: { prompt: StructuredPrompt }) {
       {prompt.example && (
         <div className="bg-neo-ink text-white p-4 border-4 border-white mt-4">
           <p className="text-sm font-black uppercase tracking-widest text-white/50 mb-1">INSPIRATION / EXAMPLE</p>
-          <p className="text-xl font-bold">{prompt.example}</p>
+          <p className="text-xl font-bold mb-4">{prompt.example}</p>
+
+          {prompt.exampleImages && prompt.exampleImages.length > 0 && (
+            <div className="flex gap-4 overflow-x-auto snap-x pb-2">
+              {prompt.exampleImages.map((src, idx) => (
+                <img
+                  key={idx}
+                  src={src}
+                  alt={`Design Example ${idx + 1}`}
+                  className="w-full max-w-lg flex-shrink-0 snap-center border-4 border-white"
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
