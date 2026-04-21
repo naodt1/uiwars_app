@@ -187,6 +187,12 @@ function PromptCard({ prompt }: { prompt: StructuredPrompt }) {
           ))}
         </ul>
       </div>
+      {prompt.example && (
+        <div className="bg-neo-ink text-white p-4 border-4 border-white mt-4">
+          <p className="text-sm font-black uppercase tracking-widest text-white/50 mb-1">INSPIRATION / EXAMPLE</p>
+          <p className="text-xl font-bold">{prompt.example}</p>
+        </div>
+      )}
     </div>
   );
 }
