@@ -10,6 +10,7 @@ export function Navbar() {
   const pathname = usePathname();
   const [nickname, setNickname] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
