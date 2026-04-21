@@ -71,9 +71,6 @@ export default function SoloPage() {
       {/* Top bar */}
       <div className="flex items-center justify-between px-6 py-4 border-b-4 border-neo-ink bg-neo-secondary">
         <div className="flex items-center gap-3">
-          <button onClick={() => router.push('/')} className="font-black uppercase text-sm tracking-widest text-neo-ink/50 hover:text-neo-ink transition-colors">
-            ← Home
-          </button>
           <span className="font-black text-2xl uppercase tracking-tight">Solo Practice</span>
           <span className={`text-xs font-black uppercase px-2 py-0.5 border-2 border-neo-ink shadow-[2px_2px_0px_0px_#000] ${MODE_COLORS[mode]}`}>
             {mode} · LVL {level}
