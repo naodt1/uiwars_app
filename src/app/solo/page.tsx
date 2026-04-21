@@ -67,14 +67,7 @@ export default function SoloPage() {
   if (!prompt) return null;
 
   return (
-    <div
-      className="min-h-[calc(100vh-57px)] text-neo-ink"
-      style={{
-        backgroundImage: 'radial-gradient(#00000022 1.5px, transparent 1.5px)',
-        backgroundSize: '22px 22px',
-        backgroundColor: '#FFFDF5',
-      }}
-    >
+    <div className="min-h-[calc(100vh-57px)] text-neo-ink bg-neo-canvas bg-halftone">
       {/* Top bar */}
       <div className="flex items-center justify-between px-6 py-4 border-b-4 border-neo-ink bg-neo-secondary">
         <div className="flex items-center gap-3">

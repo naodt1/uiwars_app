@@ -45,12 +45,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   if (hasIdentity) return <>{children}</>;
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-6 bg-neo-canvas text-neo-ink"
-      style={{
-        backgroundImage: 'radial-gradient(#000 1.5px, transparent 1.5px)',
-        backgroundSize: '20px 20px',
-      }}
-    >
+    <main className="min-h-screen flex flex-col items-center justify-center p-6 bg-neo-canvas text-neo-ink bg-halftone">
       <div className="max-w-md w-full relative">
         {/* Decorative stars */}
         <div className="absolute -top-10 -left-10 -rotate-12 text-neo-accent animate-pulse pointer-events-none">

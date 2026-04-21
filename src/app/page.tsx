@@ -70,14 +70,7 @@ export default function Home() {
 
   if (view === 'select') {
     return (
-      <main
-        className="min-h-[calc(100vh-57px)] flex flex-col items-center justify-center p-6 text-neo-ink"
-        style={{
-          backgroundImage: 'radial-gradient(#00000022 1.5px, transparent 1.5px)',
-          backgroundSize: '22px 22px',
-          backgroundColor: '#FFFDF5',
-        }}
-      >
+      <main className="min-h-[calc(100vh-57px)] flex flex-col items-center justify-center p-6 text-neo-ink bg-neo-canvas bg-halftone">
         <div className="max-w-3xl w-full space-y-10 text-center">
           <div className="space-y-4">
             <h1
@@ -126,14 +119,7 @@ export default function Home() {
   }
 
   return (
-    <main
-      className="min-h-[calc(100vh-57px)] flex flex-col items-center justify-center p-6 text-neo-ink"
-      style={{
-        backgroundImage: 'radial-gradient(#00000022 1.5px, transparent 1.5px)',
-        backgroundSize: '22px 22px',
-        backgroundColor: '#FFFDF5',
-      }}
-    >
+    <main className="min-h-[calc(100vh-57px)] flex flex-col items-center justify-center p-6 text-neo-ink bg-neo-canvas bg-halftone">
       <div className="max-w-2xl w-full space-y-10 relative">
         {/* Decorative stars */}
         <div className="absolute -top-14 -left-10 rotate-12 text-neo-accent animate-pulse pointer-events-none hidden md:block">
