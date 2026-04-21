@@ -159,6 +159,12 @@ export default function RoomPage({ params }: { params: Promise<{ roomId: string 
                       ))}
                     </ul>
                   </div>
+                  {room.prompt.example && (
+                    <div className="bg-neo-ink text-white p-4 border-4 border-white mt-4">
+                      <h3 className="text-lg font-black uppercase tracking-widest text-white/60 mb-2">INSPIRATION / EXAMPLE:</h3>
+                      <p className="text-xl font-bold">{room.prompt.example}</p>
+                    </div>
+                  )}
                 </div>
 
                 {room.prompt.designSystem && (

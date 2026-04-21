@@ -2,23 +2,41 @@
 
 import { useState } from "react";
 import type { DesignSystem } from "@/lib/types";
-import { ChevronDown, ChevronUp, Palette } from "lucide-react";
+import { ChevronDown, ChevronUp, Palette, Copy, Check } from "lucide-react";
 
 export function DesignKit({ designSystem }: { designSystem: DesignSystem }) {
   const [open, setOpen] = useState(true);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const colorsText = designSystem.colors.map(c => `${c.name}: ${c.value}`).join('\n');
+    const text = `UIWARS Design Kit - ${designSystem.name}\n\nColors:\n${colorsText}\n\nFont: ${designSystem.typography.fontFamily}\nRadius: ${designSystem.borderRadius}`;
+    
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className="border-4 border-neo-ink bg-white shadow-[4px_4px_0px_0px_#000]">
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between px-5 py-3 bg-neo-ink text-white font-black uppercase tracking-widest text-sm"
-      >
-        <span className="flex items-center gap-2">
+      <div className="w-full flex items-center justify-between px-5 bg-neo-ink text-white font-black uppercase tracking-widest text-sm">
+        <button
+          onClick={() => setOpen(o => !o)}
+          className="flex-1 flex items-center gap-2 py-3 text-left"
+        >
           <Palette size={16} strokeWidth={3} />
-          Design Kit — use these in your design
-        </span>
-        {open ? <ChevronUp size={18} strokeWidth={3} /> : <ChevronDown size={18} strokeWidth={3} />}
-      </button>
+          <span>Design Kit — use these in your design</span>
+          {open ? <ChevronUp size={18} strokeWidth={3} className="ml-2" /> : <ChevronDown size={18} strokeWidth={3} className="ml-2" />}
+        </button>
+        <button
+          onClick={handleCopy}
+          className="ml-4 flex items-center gap-2 bg-white text-neo-ink border-4 border-neo-ink px-3 py-1 text-xs hover:bg-neo-accent hover:text-white transition-colors"
+        >
+          {copied ? <Check size={14} strokeWidth={3} /> : <Copy size={14} strokeWidth={3} />}
+          {copied ? "COPIED!" : "COPY KIT"}
+        </button>
+      </div>
 
       {open && (
         <div className="p-5 grid md:grid-cols-2 gap-6">

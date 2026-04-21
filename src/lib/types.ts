@@ -24,6 +24,7 @@ export interface StructuredPrompt {
   task: string;
   constraints: string[];
   designSystem?: DesignSystem;
+  example?: string;
 }
 
 export interface Room {
